@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "email": "somchai.wong@example.com",
+      "password": "password123",
+      "name": "Somchai Wong",
+      "dateOfBirth": "1993-04-25",
+      "gender": "male",
+      "address": {
+        "street": "123/45 Sukhumvit Soi 55",
+        "city": "Bangkok",
+        "state": "Bangkok",
+        "zipCode": "10110",
+        "country": "Thailand"
+      },
+      "subscribeToNewsletter": true
+    },
+    {
+      "email": "malai.suk@example.com",
+      "password": "password123",
+      "name": "Malai Sukhothai",
+      "dateOfBirth": "1991-08-12",
+      "gender": "female",
+      "address": {
+        "street": "88/12 Nimman Road",
+        "city": "Chiang Mai",
+        "state": "Chiang Mai",
+        "zipCode": "50200",
+        "country": "Thailand"
+      },
+      "subscribeToNewsletter": false
+    },
+    {
+      "email": "pranee.rat@example.com",
+      "password": "password123",
+      "name": "Pranee Ratanakul",
+      "dateOfBirth": "1994-12-30",
+      "gender": "female",
+      "address": {
+        "street": "789/123 Central Festival",
+        "city": "Phuket",
+        "state": "Phuket",
+        "zipCode": "83000",
+        "country": "Thailand"
+      },
+      "subscribeToNewsletter": true
+    }
+  ]
+}

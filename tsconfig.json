@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",                                                            
+    "target": "es6",
+    "outDir": "./dist",                                 
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "removeComments": true,                        
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,            
+    "strict": true,                                
+    "noImplicitAny": true,                           
+    "skipLibCheck": true,
+    "sourceMap": true,   
+    "types": [
+      "./src/app.d.ts"
+    ]                 
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
