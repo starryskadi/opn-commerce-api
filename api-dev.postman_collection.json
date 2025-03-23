@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "bae0bfe7-906a-4d15-967b-a27fdec5787d",
-		"name": "User Management API",
-		"description": "API endpoints for user management system",
+		"name": "OPN Commerce Dev API",
+		"description": "API endpoints for OPN Commerce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7706013"
 	},

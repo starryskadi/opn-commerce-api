@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "bae0bfe7-906a-4d15-967b-a27fdec5787d",
+		"name": "OPN Commerce Dev API",
+		"description": "API endpoints for OPN Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7706013"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"email\": \"12122.wong@example.com\",\n      \"password\": \"Testing@asdfsdf1\",\n      \"name\": \"Somchai Wong\",\n      \"dateOfBirth\": \"1993-04-25\",\n      \"gender\": \"male\",\n      \"address\": {\n        \"street\": \"123/45 Sukhumvit Soi 55\",\n        \"city\": \"Bangkok\",\n        \"state\": \"Bangkok\",\n        \"zipCode\": \"10110\",\n        \"country\": \"Thailand\"\n      },\n      \"subscribeToNewsletter\": true\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res = pm.response.json()",
+							"if(res.token) {",
+							"    pm.collectionVariables.set(\"token\", res.token);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"malai.suk@example.com\",\n    \"password\": \"OneP@ssword1\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/profile/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"dateOfBirth\": \"1993-04-25\",\n      \"gender\": \"female\",\n      \"address\": {\n        \"street\": \"123/45 Sukhumvit Soi 55\",\n        \"city\": \"Bangkok\",\n        \"state\": \"Bangkok\",\n        \"zipCode\": \"10110\",\n        \"country\": \"Thailand\"\n      },\n      \"subscribeToNewsletter\": true\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/profile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Profile",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{base_url}}/profile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"OneP@ssword1\",\n    \"newPassword\": \"Testing@asdfsdf1\",\n    \"confirmNewPassword\": \"Testing@asdfsdf1\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/change-password",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://bzt5zswfa3.ap-southeast-1.awsapprunner.com/",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "faketokenuser_1",
+			"type": "string"
+		}
+	]
+}
