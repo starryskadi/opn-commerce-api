@@ -4,15 +4,19 @@ import { User } from "../models/User.model"
 type Token = string;
 
 // Signleton to avoid multiple intialization
-let instance: Auth
-
 export class Auth {
-    private userCollection:UserCollection = new UserCollection()
+    private userCollection:UserCollection = UserCollection.getInstance()
+    private static instance: Auth
 
-    constructor() {
-        if (instance) return instance
+    private constructor() {
+    
+    }
 
-        instance = this
+    public static getInstance() {
+        if (!this.instance) {
+            this.instance = new Auth()
+        }
+        return this.instance
     }
 
     // Authentication should be verified from header "Authorization" with mock value e.g.: Authorization: Bearer faketoken_user1

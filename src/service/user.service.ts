@@ -2,17 +2,20 @@ import bycrpt from "bcryptjs";
 import { User } from "../models/User.model";
 import { UserCollection } from "../models/UserCollection.model";
 // Singleton to share the data across the application
-let instance: UserService; 
+
 
 export class UserService {
-    private userCollection: UserCollection = new UserCollection()
+    private userCollection: UserCollection = UserCollection.getInstance()
+    private static instance: UserService
+    private constructor() {}
 
-    constructor() {
-        if (instance) return instance
-
-        instance = this
+    public static getInstance() {
+        if (!this.instance) {
+            this.instance = new UserService()
+        }
+        return this.instance
     }
-
+    
     public isUserEmailExist(user: Pick<User, 'email'>) {
         try { 
             return !!this.userCollection.getByEmail({ email: user.email }) 
@@ -31,7 +34,7 @@ export class UserService {
             throw Error("Username / Password incorrect")
         }  
 
-        return this.userWithoutPassword(loggedInUser)   
+        return this.protectUserResponse(loggedInUser)   
     }
 
     public register(user: Omit<User, 'id'>) {
@@ -41,7 +44,7 @@ export class UserService {
 
         const createdUser = this.userCollection.create(user)
 
-        return this.userWithoutPassword(createdUser)
+        return createdUser
     }
 
     public updatePassword(info: Pick<User, 'id' | 'password'> & { newPassword: string, confirmNewPassword: string }) {
@@ -63,28 +66,33 @@ export class UserService {
             throw Error("Current Password is incorrect")
         }
 
-        const updatedUser = {
-            ...currentUser,
+        return this.userCollection.updateByID({
+            id: currentUser.id,
             password: newPassword
-        }
-
-        return this.userWithoutPassword(this.userCollection.updateByID(updatedUser))
+        })
     }
 
-    public userWithoutPassword(user: User) {
-        const userWithoutPassword: PartialBy<User, 'password'> = { ...user};
-
-        delete userWithoutPassword.password
-
+    public protectUserResponse(user: User) {
+        // need to clone the user object to avoid mutating the original object
+        const userWithoutPassword: PartialBy<User, 'password'> = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            dateOfBirth: user.dateOfBirth,
+            gender: user.gender,
+            address: user.address,
+            subscribeToNewsletter: user.subscribeToNewsletter
+        }
+        
         return userWithoutPassword
     }
 
     public getProfile(user: Pick<User, 'id'>) {
-        return this.userWithoutPassword(this.userCollection.getById(user))
+        return this.protectUserResponse(this.userCollection.getById(user))
     }
 
     public updateProfile(user: Partial<Omit<User, 'email' | 'password' | 'name'>> & Pick<User, 'id'>) {
-        return this.userCollection.updateByID(user)
+        return this.protectUserResponse(this.userCollection.updateByID(user))
     }
 
     public deleteProfile(user: Pick<User, 'id'>) {

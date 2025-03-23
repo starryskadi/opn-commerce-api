@@ -1,18 +1,21 @@
 import seedUsers from "../data/user.seed.json"
 import { User } from "../models/User.model";
+import { UserSchema } from "../schema/user.schema";
 // Singleton to share the data across the application
-let instance: UserCollection; 
-
 export class UserCollection {
     private users: User[] = []
     private lastIDIndex = 0;
+    private static instance: UserCollection;
 
-    constructor() {
-        if (instance) return instance
-
-        instance = this
-
+    private constructor() {
         this.seedUsers()
+    }
+
+    public static getInstance() {
+        if (!this.instance) {
+            this.instance = new UserCollection()
+        }
+        return this.instance
     }
 
     private ID() {
@@ -29,17 +32,15 @@ export class UserCollection {
         }) 
     }
 
-    public create(user: Omit<User, 'id'>) {
+    public create(user: Omit<User, 'id'>): User {
         const id = this.ID()
-        this.users.push(new User({
+        const createdUser = new User({
             ...user,
             id: id
-        }))
+        })
+        this.users.push(createdUser)
 
-        return {
-             ...user,
-             id
-        }
+        return createdUser
     }
 
     public getById(user: Pick<User, 'id'>) {
@@ -72,24 +73,21 @@ export class UserCollection {
     }
 
     public updateByID(user: Partial<Omit<User, 'id'>> & Pick<User, 'id'>) {
-        const userFoundIndex = this.users.findIndex((value) => {
-            return value.id === user.id
-        })
+        const foundUser = this.users.find(u => u.id === user.id)
 
-        if (userFoundIndex < 0) {
+        if (!foundUser) {
             throw Error("User doesn't exist")
         }
 
-        const updatedUser = new User({
-            ...this.users[userFoundIndex],
-            ...user
-        })
+        if (user.email) foundUser.email = user.email;
+        if (user.password) foundUser.password = user.password;
+        if (user.name) foundUser.name = user.name;
+        if (user.dateOfBirth) foundUser.dateOfBirth = user.dateOfBirth;
+        if (user.gender) foundUser.gender = user.gender;
+        if (user.address) foundUser.address = user.address;
+        if (user.subscribeToNewsletter) foundUser.subscribeToNewsletter = user.subscribeToNewsletter;
 
-        console.log(updatedUser)
-
-        this.users[userFoundIndex] = updatedUser
-        
-        return updatedUser
+        return foundUser
     }
 
     public deleteByID(user: Pick<User, 'id'>) {

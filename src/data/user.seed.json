@@ -2,7 +2,7 @@
   "users": [
     {
       "email": "somchai.wong@example.com",
-      "password": "password123",
+      "password": "OneP@ssword1",
       "name": "Somchai Wong",
       "dateOfBirth": "1993-04-25",
       "gender": "male",
@@ -17,7 +17,7 @@
     },
     {
       "email": "malai.suk@example.com",
-      "password": "password123",
+      "password": "OneP@ssword1",
       "name": "Malai Sukhothai",
       "dateOfBirth": "1991-08-12",
       "gender": "female",
@@ -32,7 +32,7 @@
     },
     {
       "email": "pranee.rat@example.com",
-      "password": "password123",
+      "password": "OneP@ssword1",
       "name": "Pranee Ratanakul",
       "dateOfBirth": "1994-12-30",
       "gender": "female",
